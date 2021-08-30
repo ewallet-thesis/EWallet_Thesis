@@ -179,7 +179,7 @@ class APIService {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        "mobile": mobileNumber,
+        "mobile": encrypt(mobileNumber),
         "questionID1": "1",
         "answer1": answer1,
         "questionID2": "2",
@@ -197,7 +197,7 @@ class APIService {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        "mobile": mobile,
+        "mobile": encrypt(mobile),
         "mpin": mpin,
         "token": token,
       }),
