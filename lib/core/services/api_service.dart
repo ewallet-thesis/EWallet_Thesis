@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:ewallet_clover/core/functions/encrypt_and_decrypt.dart';
 import 'package:ewallet_clover/core/functions/http_handler.dart';
 
 class APIService {
-  String _url = 'https://thesisemoney.000webhostapp.com/mobileWallet';
+  String _url = 'https://thesisemoney.000webhostapp.com/dev';
 
   Future<ResponseModel> signIn({String mobile, mpin}) async {
     return await requestHandler(
@@ -13,8 +14,8 @@ class APIService {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        'mobile': mobile,
-        'mpin': mpin,
+        'mobile': encrypt(mobile),
+        'mpin': encrypt(mpin),
       }),
     );
   }
@@ -26,7 +27,7 @@ class APIService {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        'mobile': mobile,
+        'mobile': encrypt(mobile),
       }),
     );
   }
@@ -38,7 +39,7 @@ class APIService {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        "mobile": mobileNumber,
+        "mobile": encrypt(mobileNumber),
       }),
     );
   }
@@ -50,7 +51,7 @@ class APIService {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        "mobile": mobileNumber,
+        "mobile": encrypt(mobileNumber),
       }),
     );
   }
@@ -87,18 +88,18 @@ class APIService {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        "mobile": mobile,
-        "mpin": mpin,
-        "emailAdd": email,
-        "firstname": firstName,
-        if (middleName != '') "middleInitial": middleName,
-        "lastname": lastName,
-        "dateOfBirth": birthDate,
-        "gender": gender,
-        "maritalStatus": maritalStatus,
-        "fullAddress": fullAddress,
-        "model": deviceModel,
-        "imei": deviceID,
+        "mobile": encrypt(mobile),
+        "mpin": encrypt(mpin),
+        "emailAdd": encrypt(email),
+        "firstname": encrypt(firstName),
+        if (middleName != '') "middleInitial": encrypt(middleName),
+        "lastname": encrypt(lastName),
+        "dateOfBirth": encrypt(birthDate),
+        "gender": encrypt(gender),
+        "maritalStatus": encrypt(maritalStatus),
+        "fullAddress": encrypt(fullAddress),
+        "model": encrypt(deviceModel),
+        "imei": encrypt(deviceID),
       }),
     );
   }
@@ -122,11 +123,11 @@ class APIService {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        "trnDescription": "Fund Transfer",
-        "amount": amount,
-        "sourceMobile": source,
-        "targetMobile": target,
-        "mobileRef": refID,
+        "trnDescription": encrypt("Fund Transfer"),
+        "amount": encrypt(amount),
+        "sourceMobile": encrypt(source),
+        "targetMobile": encrypt(target),
+        "mobileRef": encrypt(refID),
       }),
     );
   }

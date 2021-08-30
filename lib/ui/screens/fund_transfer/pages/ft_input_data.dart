@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:ewallet_clover/core/functions/encrypt_and_decrypt.dart';
 import 'package:ewallet_clover/core/functions/http_handler.dart';
 import 'package:ewallet_clover/core/functions/loading_dialog.dart';
 import 'package:ewallet_clover/core/providers/transaction_provider.dart';
@@ -47,7 +48,7 @@ class _FTInputDataState extends State<FTInputData> {
       ResponseModel response = await _apiService.validateMobileNumber(mobileNumber: '0${_mobileFieldController.text}');
 
       if (response.resultCode == 00) {
-        transaction.targetName = '${response.result['data']['firstname']} ${response.result['data']['lastname']}';
+        transaction.targetName = '${decrypt(response.result['data']['firstname'])} ${decrypt(response.result['data']['lastname'])}';
         return true;
       } else {
         loadingDialog.hide();

@@ -1,3 +1,4 @@
+import 'package:ewallet_clover/core/functions/encrypt_and_decrypt.dart';
 import 'package:ewallet_clover/core/functions/http_handler.dart';
 import 'package:ewallet_clover/core/model/history_model.dart';
 import 'package:ewallet_clover/core/services/api_service.dart';
@@ -138,18 +139,18 @@ class UserProvider extends ChangeNotifier {
 
     if (response.resultCode == 00) {
       saveMobileNumber(mobileNumber: mobile);
-      _userID = response.result['data']['userID'];
-      _mobile = response.result['data']['mobile'];
-      _firstName = response.result['data']['firstname'];
-      _middleName = response.result['data']['middleInitial'];
-      _lastName = response.result['data']['lastname'];
-      _gender = response.result['data']['gender'];
-      _dateOfBirth = response.result['data']['dateOfBirth'];
-      _maritalStatus = response.result['data']['maritalStatus'];
-      _createdDateTime = response.result['data']['createdDateTime'];
+      _userID = decrypt(response.result['data']['userID']);
+      _mobile = decrypt(response.result['data']['mobile']);
+      _firstName = decrypt(response.result['data']['firstname']);
+      _middleName = decrypt(response.result['data']['middleInitial']);
+      _lastName = decrypt(response.result['data']['lastname']);
+      _gender = decrypt(response.result['data']['gender']);
+      _dateOfBirth = decrypt(response.result['data']['dateOfBirth']);
+      _maritalStatus = decrypt(response.result['data']['maritalStatus']);
+      _createdDateTime = decrypt(response.result['data']['createdDateTime']);
       _hasSecurityQuestion = response.result['data']['hasSecurityQuestion'];
-      _email = response.result['data']['email'][0]['emailAdd'];
-      _address = response.result['data']['address'][0]['fullAddress'];
+      _email = decrypt(response.result['data']['email'][0]['emailAdd']);
+      _address = decrypt(response.result['data']['address'][0]['fullAddress']);
     }
     return response;
   }
@@ -162,8 +163,8 @@ class UserProvider extends ChangeNotifier {
     );
 
     if (response.resultCode == 00) {
-      _totalBalance = double.parse(response.result['data']['totalBalance']);
-      _availableBalance = double.parse(response.result['data']['availableBalance']);
+      _totalBalance = double.parse(decrypt(response.result['data']['totalBalance']));
+      _availableBalance = double.parse(decrypt(response.result['data']['availableBalance']));
     }
     _isBalanceLoading = false;
     notifyListeners();

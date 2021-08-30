@@ -1,3 +1,4 @@
+import 'package:ewallet_clover/core/functions/encrypt_and_decrypt.dart';
 import 'package:ewallet_clover/core/functions/http_handler.dart';
 import 'package:ewallet_clover/core/functions/loading_dialog.dart';
 import 'package:ewallet_clover/core/providers/transaction_provider.dart';
@@ -43,8 +44,8 @@ class _FTConfirmationState extends State<FTConfirmation> {
 
       if (response.resultCode == 00) {
         transaction.isTransferSuccess = true;
-        transaction.transDateTime = response.result['data']['trnDateTime'];
-        transaction.coreRefID = response.result['data']['refID'];
+        transaction.transDateTime = decrypt(response.result['data']['trnDateTime']);
+        transaction.coreRefID = decrypt(response.result['data']['refID']);
         user.getBalance();
         user.getTransactionHistory();
         return true;
